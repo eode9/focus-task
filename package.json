@@ -4,6 +4,10 @@
   "description": "Gestion des tâches Clickup dans VSCode",
   "version": "0.0.1",
   "publisher": "dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eode9/focus-task.git"
+  },
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -13,7 +17,8 @@
   "activationEvents": [
     "onStartupFinished",
     "onCommand:focus-task.selectTask",
-    "*"
+    "onCommand:focus-task.openTask",
+    "onCommand:vscode.git"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -21,6 +26,10 @@
       {
         "command": "focus-task.selectTask",
         "title": "Focus Task: Sélectionner une tâche"
+      },
+      {
+        "command": "focus-task.openTask",
+        "title": "Focus Task: Ouvrir la tâche courante"
       }
     ],
     "configuration": {
@@ -29,7 +38,23 @@
         "focusTask.statusBarColor": {
           "type": "string",
           "default": "#98FF98",
-          "description": "Couleur de la barre d'état"
+          "description": "Couleur de la barre d'état",
+          "format": "color"
+        },
+        "focusTask.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Votre clé API Clickup"
+        },
+        "focusTask.defaultListId": {
+          "type": "string",
+          "default": "",
+          "description": "ID de la liste Clickup par défaut"
+        },
+        "focusTask.commitMessageTemplate": {
+          "type": "string",
+          "default": "[{taskId}] {taskName}",
+          "description": "Template pour les messages de commit. Variables disponibles: {taskId}, {taskName}, {taskStatus}"
         }
       }
     }
@@ -60,5 +85,9 @@
     "eslint": "^9.13.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.6.12",
+    "node-fetch": "^3.3.2"
   }
 }
